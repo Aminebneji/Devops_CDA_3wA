@@ -1,0 +1,34 @@
+name: NodeJS CI
+on:
+    pull_request:
+      branches: [ main, develop ]
+      types: [ opened, edited, synchronize ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [21.x]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Build
+      run: npm install
+
+    - name: Execute tests via Jest
+      run: npm test
+    
+    - name: Execute lints via ESLint and Standard
+      run: npm run lint
+
+    - name: Install Vercel CLI
+      run: npm install --global vercel@latest
+
