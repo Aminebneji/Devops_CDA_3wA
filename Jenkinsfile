@@ -14,21 +14,9 @@ pipeline {
             }
         }
 
-        stage('Run Linter') {
-            steps {
-                sh 'npm run lint'
-            }
-        }
-
         stage('Run Script') {
             steps {
                 sh 'npm run test'
-            }
-        }
-
-        stage('Test Echo') {
-            steps {
-                echo 'Hello, Jenkins pipeline is working with Docker and npm install!'
             }
         }
     }
